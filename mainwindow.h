@@ -52,10 +52,10 @@ private slots:
     void On_spinThreshold_valueChanged(int newvalue);
     void On_spinBlackheight_valueChanged(int newvalue);
     void On_spinWhiteheight_valueChanged(int newvalue);
-    void On_checkInsertBeginFrame_Toggled(bool value);
-    void On_checkInsertHeader_Toggled(bool value);
-    void On_checkInsert0b_Toggled(bool value);
-    void On_checkInsertComma_Toggled(bool value);
+    void On_checkInsertBeginFrame_Toggled(int value);
+    void On_checkInsertHeader_Toggled(int value);
+    void On_checkInsert0b_Toggled(int value);
+    void On_checkInsertComma_Toggled(int value);
 };
 
 #endif // MAINWINDOW_H

@@ -32,6 +32,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->spinThreshold, &QSpinBox::valueChanged, this, &MainWindow::On_spinThreshold_valueChanged);
     connect(ui->spinBlackheight, &QSpinBox::valueChanged, this, &MainWindow::On_spinBlackheight_valueChanged);
     connect(ui->spinWhiteheight, &QSpinBox::valueChanged, this, &MainWindow::On_spinWhiteheight_valueChanged);
+    connect(ui->checkInsert0b, &QCheckBox::stateChanged, this, &MainWindow::On_checkInsert0b_Toggled);
+    connect(ui->checkInsertBeginFrame, &QCheckBox::stateChanged, this, &MainWindow::On_checkInsertBeginFrame_Toggled);
+    connect(ui->checkInsertComma, &QCheckBox::stateChanged, this, &MainWindow::On_checkInsertComma_Toggled);
+    connect(ui->checkInsertHeader, &QCheckBox::stateChanged, this, &MainWindow::On_checkInsertHeader_Toggled);
 }
 
 MainWindow::~MainWindow(){
@@ -168,7 +172,7 @@ void MainWindow::On_buttonDecode_clicked(){
 }
 
 void MainWindow::On_textCoderUser_textChanged(){
-
+    emit Translate(ui->textCoderUser->toPlainText());
 }
 
 void MainWindow::On_spinFrameAvg_valueChanged(int newvalue){
@@ -187,18 +191,18 @@ void MainWindow::On_spinWhiteheight_valueChanged(int newvalue){
     emit CameraSetWhitesize(newvalue);
 }
 
-void MainWindow::On_checkInsertBeginFrame_Toggled(bool value){
-
+void MainWindow::On_checkInsertBeginFrame_Toggled(int value){
+    emit SetInsertBeginFrame(value);
 }
 
-void MainWindow::On_checkInsertHeader_Toggled(bool value){
-
+void MainWindow::On_checkInsertHeader_Toggled(int value){
+    emit SetInsertHeader(value);
 }
 
-void MainWindow::On_checkInsert0b_Toggled(bool value){
-
+void MainWindow::On_checkInsert0b_Toggled(int value){
+    emit SetInsert0b(value);
 }
 
-void MainWindow::On_checkInsertComma_Toggled(bool value){
-
+void MainWindow::On_checkInsertComma_Toggled(int value){
+    emit SetInsertComma(value);
 }
