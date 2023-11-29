@@ -20,7 +20,6 @@ private:
     unsigned int fps = 0;
 
     // Provate methods
-    QImage _debugFrameTest();
 
 public:
     explicit WorkerCamera(QObject *parent = nullptr);

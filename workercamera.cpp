@@ -88,17 +88,3 @@ void WorkerCamera::Timer1STimeout(){
     fps = framecounter;
     framecounter = 0;
 }
-
-QImage WorkerCamera::_debugFrameTest(){
-    QImage frame = QImage(1280, 720, QImage::Format_RGB32);
-
-    for(int j=0; j<720 ;j++){
-        for(int i=0; i<1280 ;i++){
-            frame.setPixel(i, j, qRgb((i+j)%256, (i-j)%256, (i*j)%256));
-        }
-    }
-
-    framecounter++;
-
-    return frame;
-}
