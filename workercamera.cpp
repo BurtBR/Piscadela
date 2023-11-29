@@ -27,16 +27,16 @@ WorkerCamera::~WorkerCamera(){
 
 void WorkerCamera::ProcessFrame(QImage &frame){
 
-    unsigned char linecolor;
+    unsigned int linecolor;
 
     for(int j=0; j<frame.height() ;j++){
         if((frame.pixel(frame.width()/2, j)&0xFF) > selectionthreshold)
-            linecolor = 255;
+            linecolor = 0xFFFFFFFF;
         else
             linecolor = 0;
 
         for(int i=0; i<frame.width() ;i++)
-            frame.setPixelColor(i, j, qRgb(linecolor, linecolor, linecolor));
+            frame.setPixelColor(i, j, linecolor);
     }
 }
 
@@ -109,7 +109,27 @@ void WorkerCamera::Timer1STimeout(){
     framecounter = 0;
 }
 
-void WorkerCamera::StartCoding(unsigned char threshold){
+void WorkerCamera::StartCoding(unsigned int frameaverage, unsigned char threshold, unsigned int blacksize, unsigned int whitesize){
     coding = !coding;
+
+    frameavg = frameaverage;
     selectionthreshold = threshold;
+    blackheight = blacksize;
+    whiteheight = whitesize;
+}
+
+void WorkerCamera::CameraSetFrameaverage(unsigned int value){
+    frameavg = value;
+}
+
+void WorkerCamera::CameraSetThreshold(unsigned int value){
+    selectionthreshold = value;
+}
+
+void WorkerCamera::CameraSetBlacksize(unsigned int value){
+    blackheight = value;
+}
+
+void WorkerCamera::CameraSetWhitesize(unsigned int value){
+    whiteheight = value;
 }

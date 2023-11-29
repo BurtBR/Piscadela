@@ -20,6 +20,9 @@ private:
     unsigned int fps = 0;
     bool coding = false;
     unsigned char selectionthreshold = 70;
+    unsigned int frameavg = 3;
+    unsigned int blackheight = 15;
+    unsigned int whiteheight = 18;
 
     // Provate methods
     void ProcessFrame(QImage &frame);
@@ -38,7 +41,11 @@ private slots:
 
 public slots:
     void StartCamera();
-    void StartCoding(unsigned char threshold = 70);
+    void StartCoding(unsigned int frameaverage = 3, unsigned char threshold = 70, unsigned int blacksize = 13, unsigned int whitesize = 18);
+    void CameraSetFrameaverage(unsigned int value);
+    void CameraSetThreshold(unsigned int value);
+    void CameraSetBlacksize(unsigned int value);
+    void CameraSetWhitesize(unsigned int value);
 };
 
 #endif // WORKERCAMERA_H

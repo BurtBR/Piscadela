@@ -18,6 +18,10 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->buttonDecode, &QPushButton::clicked, this, &MainWindow::On_buttonDecode_clicked);
     connect(ui->buttonSwapCamera, &QToolButton::clicked, this, &MainWindow::On_buttonSwapCamera_clicked);
     connect(ui->textCoderUser, &QTextEdit::textChanged, this, &MainWindow::On_textCoderUser_textChanged);
+    connect(ui->spinFrameAvg, &QSpinBox::valueChanged, this, &MainWindow::On_spinFrameAvg_valueChanged);
+    connect(ui->spinThreshold, &QSpinBox::valueChanged, this, &MainWindow::On_spinThreshold_valueChanged);
+    connect(ui->spinBlackheight, &QSpinBox::valueChanged, this, &MainWindow::On_spinBlackheight_valueChanged);
+    connect(ui->spinWhiteheight, &QSpinBox::valueChanged, this, &MainWindow::On_spinWhiteheight_valueChanged);
 }
 
 MainWindow::~MainWindow(){
@@ -62,6 +66,11 @@ bool MainWindow::StartThreadCamera(){
     connect(this, &MainWindow::StartCamera, worker, &WorkerCamera::StartCamera);
     connect(this, &MainWindow::StartCoding, worker, &WorkerCamera::StartCoding);
 
+    connect(this, &MainWindow::CameraSetFrameaverage, worker, &WorkerCamera::CameraSetFrameaverage);
+    connect(this, &MainWindow::CameraSetThreshold, worker, &WorkerCamera::CameraSetThreshold);
+    connect(this, &MainWindow::CameraSetBlacksize, worker, &WorkerCamera::CameraSetBlacksize);
+    connect(this, &MainWindow::CameraSetWhitesize, worker, &WorkerCamera::CameraSetWhitesize);
+
     worker->moveToThread(threadCamera);
     threadCamera->start();
 
@@ -91,9 +100,28 @@ void MainWindow::On_buttonSwapCamera_clicked(){
 }
 
 void MainWindow::On_buttonDecode_clicked(){
-    emit StartCoding(ui->spinThreshold->value());
+    emit StartCoding(ui->spinFrameAvg->value(),
+                     ui->spinThreshold->value(),
+                     ui->spinBlackheight->value(),
+                     ui->spinWhiteheight->value());
 }
 
 void MainWindow::On_textCoderUser_textChanged(){
 
+}
+
+void MainWindow::On_spinFrameAvg_valueChanged(int newvalue){
+    emit CameraSetFrameaverage(newvalue);
+}
+
+void MainWindow::On_spinThreshold_valueChanged(int newvalue){
+    emit CameraSetThreshold(newvalue);
+}
+
+void MainWindow::On_spinBlackheight_valueChanged(int newvalue){
+    emit CameraSetBlacksize(newvalue);
+}
+
+void MainWindow::On_spinWhiteheight_valueChanged(int newvalue){
+    emit CameraSetWhitesize(newvalue);
 }
