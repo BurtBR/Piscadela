@@ -6,6 +6,16 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     this->setWindowTitle(this->windowTitle() + " (" + QString(GIT_COMMIT_HASH) + ")");
 
     try{
+        if(!StartThreadCoder()){
+            throw;
+            return;
+        }
+    }catch(...){
+        throw "Failed to allocate memory for threadCoder";
+        return;
+    }
+
+    try{
         if(!StartThreadCamera()){
             throw;
             return;
@@ -35,6 +45,16 @@ MainWindow::~MainWindow(){
         }
         delete threadCamera;
         threadCamera = nullptr;
+    }
+
+    if(threadCoder){
+        threadCoder->quit();
+        if(!threadCoder->wait(5000)){
+            threadCoder->terminate();
+            threadCoder->wait();
+        }
+        delete threadCoder;
+        threadCoder = nullptr;
     }
 }
 
@@ -79,6 +99,43 @@ bool MainWindow::StartThreadCamera(){
     return true;
 }
 
+bool MainWindow::StartThreadCoder(){
+
+    WorkerCoder *worker = nullptr;
+
+    if(threadCoder)
+        return false;
+
+    try{
+        threadCoder = new QThread(this);
+    }catch(...){
+        throw "Failed to allocate memory for threadCoder";
+        return false;
+    }
+
+    try{
+        worker = new WorkerCoder();
+    }catch(...){
+        delete threadCoder;
+        threadCoder = nullptr;
+        throw "Failed to allocate memory for threadCoder";
+        return false;
+    }
+
+    connect(this, &MainWindow::Translate, worker, &WorkerCoder::Translate);
+    connect(this, &MainWindow::SetInsert0b, worker, &WorkerCoder::SetInsert0b);
+    connect(this, &MainWindow::SetInsertBeginFrame, worker, &WorkerCoder::SetInsertBeginFrame);
+    connect(this, &MainWindow::SetInsertComma, worker, &WorkerCoder::SetInsertComma);
+    connect(this, &MainWindow::SetInsertHeader, worker, &WorkerCoder::SetInsertHeader);
+    connect(worker, &WorkerCoder::Translated, this, &MainWindow::WorkerTranslated);
+    connect(threadCoder, &QThread::finished, worker, &WorkerCoder::deleteLater);
+
+    worker->moveToThread(threadCoder);
+    threadCoder->start();
+
+    return true;
+}
+
 void MainWindow::PrintMessage(QString text){
     ui->textConsole->moveCursor (QTextCursor::End);
     ui->textConsole->insertPlainText(text);
@@ -93,6 +150,10 @@ void MainWindow::PresentFrame(QPixmap frame){
 
 void MainWindow::WorkerMessage(QString message){
     PrintMessage(message);
+}
+
+void MainWindow::WorkerTranslated(QString text){
+    ui->textCoderCode->setText(text);
 }
 
 void MainWindow::On_buttonSwapCamera_clicked(){
@@ -124,4 +185,20 @@ void MainWindow::On_spinBlackheight_valueChanged(int newvalue){
 
 void MainWindow::On_spinWhiteheight_valueChanged(int newvalue){
     emit CameraSetWhitesize(newvalue);
+}
+
+void MainWindow::On_checkInsertBeginFrame_Toggled(bool value){
+
+}
+
+void MainWindow::On_checkInsertHeader_Toggled(bool value){
+
+}
+
+void MainWindow::On_checkInsert0b_Toggled(bool value){
+
+}
+
+void MainWindow::On_checkInsertComma_Toggled(bool value){
+
 }

@@ -94,7 +94,7 @@ QCheckBox{
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -409,7 +409,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_6">
           <item>
-           <widget class="QCheckBox" name="checkBox_4">
+           <widget class="QCheckBox" name="checkInsertBeginFrame">
             <property name="text">
              <string>Inserir Frame Inicial</string>
             </property>
@@ -419,7 +419,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_2">
+           <widget class="QCheckBox" name="checkInsertHeader">
             <property name="text">
              <string>Inserir Cabeçalho</string>
             </property>
@@ -429,7 +429,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox_3">
+           <widget class="QCheckBox" name="checkInsert0b">
             <property name="text">
              <string>Inserir &quot;0b&quot;</string>
             </property>
@@ -439,7 +439,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
            </widget>
           </item>
           <item>
-           <widget class="QCheckBox" name="checkBox">
+           <widget class="QCheckBox" name="checkInsertComma">
             <property name="text">
              <string>Inserir &quot;,&quot;</string>
             </property>
@@ -509,10 +509,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <tabstop>spinBlackheight</tabstop>
   <tabstop>spinWhiteheight</tabstop>
   <tabstop>buttonDecode</tabstop>
-  <tabstop>checkBox_4</tabstop>
-  <tabstop>checkBox_2</tabstop>
-  <tabstop>checkBox_3</tabstop>
-  <tabstop>checkBox</tabstop>
+  <tabstop>checkInsertBeginFrame</tabstop>
+  <tabstop>checkInsertHeader</tabstop>
+  <tabstop>checkInsert0b</tabstop>
+  <tabstop>checkInsertComma</tabstop>
   <tabstop>textCoderUser</tabstop>
  </tabstops>
  <resources>
