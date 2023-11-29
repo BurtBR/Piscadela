@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Images/swapcamera.png</file>
+    </qresource>
+</RCC>
