@@ -37,7 +37,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Icon.rc
         resources.qrc
         workercamera.h workercamera.cpp
-        videosink.h videosink.cpp
+
     )
 
     find_package(Git)
