@@ -24,8 +24,8 @@ int main(int argc, char *argv[]){
     w->showMaximized();
     a->exec();
 
-    delete a;
     delete w;
+    delete a;
 
     return 0;
 }

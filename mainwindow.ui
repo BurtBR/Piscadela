@@ -45,6 +45,12 @@ QPushButton{
 	background-color: rgb(71, 71, 71);
 }
 
+QComboBox{
+	font: 10pt &quot;Source Code Pro&quot;;
+	color: rgb(255, 255, 255);
+	background-color: rgb(71, 71, 71);
+}
+
 QToolButton{
 	font: 20pt &quot;Source Code Pro&quot;;
 	color: rgb(255, 255, 255);
@@ -55,6 +61,20 @@ QTextEdit{
 	font: 14pt &quot;Source Code Pro&quot;;
 	color: rgb(255, 255, 255);
 	background-color: rgba(0, 0, 0, 200);
+	border: transparent;
+}
+
+QLineEdit{
+	font: 8pt &quot;Source Code Pro&quot;;
+	color: rgb(255, 255, 255);
+	background-color: transparent;
+	border: transparent;
+}
+
+QSpinBox{
+	font: 14pt &quot;Source Code Pro&quot;;
+	color: rgb(255, 255, 255);
+	background-color: transparent;
 	border: transparent;
 }
 
@@ -109,6 +129,77 @@ QCheckBox{
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="acceptDrops">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Leituda do código:</string>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox">
+            <item>
+             <property name="text">
+              <string>Bottom/Up</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Up/Bottom</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="lineEdit">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>230</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="focusPolicy">
+             <enum>Qt::NoFocus</enum>
+            </property>
+            <property name="acceptDrops">
+             <bool>false</bool>
+            </property>
+            <property name="text">
+             <string>Média de frames por símbolo:</string>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinBox_2">
+            <property name="value">
+             <number>3</number>
             </property>
            </widget>
           </item>
@@ -209,6 +300,16 @@ li.checked::marker { content: &quot;\2612&quot;; }
        <layout class="QHBoxLayout" name="horizontalLayout_4">
         <item>
          <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QCheckBox" name="checkBox_4">
+            <property name="text">
+             <string>Inserir Frame Inicial</string>
+            </property>
+            <property name="checked">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
           <item>
            <widget class="QCheckBox" name="checkBox_2">
             <property name="text">

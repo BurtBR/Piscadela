@@ -7,6 +7,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     connect(ui->buttonDecode, &QPushButton::clicked, this, &MainWindow::On_buttonDecode_clicked);
     connect(ui->buttonSwapCamera, &QToolButton::clicked, this, &MainWindow::On_buttonSwapCamera_clicked);
+    connect(ui->textCoderUser, &QTextEdit::textChanged, this, &MainWindow::On_textCoderUser_textChanged);
 }
 
 MainWindow::~MainWindow(){
@@ -24,4 +25,8 @@ void MainWindow::On_buttonSwapCamera_clicked(){
 
 void MainWindow::On_buttonDecode_clicked(){
     PrintMessage("Pi pi pi po po zaum\n");
+}
+
+void MainWindow::On_textCoderUser_textChanged(){
+
 }

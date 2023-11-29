@@ -21,5 +21,6 @@ private slots:
     void PrintMessage(QString text);
     void On_buttonSwapCamera_clicked();
     void On_buttonDecode_clicked();
+    void On_textCoderUser_textChanged();
 };
 #endif // MAINWINDOW_H
