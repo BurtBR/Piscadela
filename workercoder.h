@@ -12,6 +12,8 @@ private:
     bool binarytext = true;
     bool commatext = true;
 
+    QString CharToBinary(QChar &c);
+
 public:
     explicit WorkerCoder(QObject *parent = nullptr);
 

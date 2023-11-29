@@ -193,16 +193,20 @@ void MainWindow::On_spinWhiteheight_valueChanged(int newvalue){
 
 void MainWindow::On_checkInsertBeginFrame_Toggled(int value){
     emit SetInsertBeginFrame(value);
+    emit Translate(ui->textCoderUser->toPlainText());
 }
 
 void MainWindow::On_checkInsertHeader_Toggled(int value){
     emit SetInsertHeader(value);
+    emit Translate(ui->textCoderUser->toPlainText());
 }
 
 void MainWindow::On_checkInsert0b_Toggled(int value){
     emit SetInsert0b(value);
+    emit Translate(ui->textCoderUser->toPlainText());
 }
 
 void MainWindow::On_checkInsertComma_Toggled(int value){
     emit SetInsertComma(value);
+    emit Translate(ui->textCoderUser->toPlainText());
 }
