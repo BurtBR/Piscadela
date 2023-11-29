@@ -13,10 +13,15 @@ MainWindow::~MainWindow(){
     delete ui;
 }
 
+void MainWindow::PrintMessage(QString text){
+    ui->textConsole->moveCursor (QTextCursor::End);
+    ui->textConsole->insertPlainText(text);
+}
+
 void MainWindow::On_buttonSwapCamera_clicked(){
-    ui->textConsole->append("Troca troca de câmera");
+    PrintMessage("Troca troca de câmera\n");
 }
 
 void MainWindow::On_buttonDecode_clicked(){
-    ui->textConsole->append("Decodificamento");
+    PrintMessage("Pi pi pi po po zaum\n");
 }

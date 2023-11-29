@@ -18,6 +18,7 @@ public:
     ~MainWindow();
 
 private slots:
+    void PrintMessage(QString text);
     void On_buttonSwapCamera_clicked();
     void On_buttonDecode_clicked();
 };
