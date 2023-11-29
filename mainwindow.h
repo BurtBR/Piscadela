@@ -30,6 +30,7 @@ signals:
 private slots:
     void PrintMessage(QString text);
     void PresentFrame(QPixmap frame);
+    void WorkerMessage(QString message);
     void On_buttonSwapCamera_clicked();
     void On_buttonDecode_clicked();
     void On_textCoderUser_textChanged();

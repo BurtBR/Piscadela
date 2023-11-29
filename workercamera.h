@@ -7,12 +7,14 @@
 #include <QVideoSink>
 #include <QImage>
 #include <QPixmap>
+#include <QPainter>
 #include <QTimer>
 
 class WorkerCamera : public QObject{
     Q_OBJECT
 private:
     QMediaCaptureSession *mediasession = nullptr;
+    QCamera *camera = nullptr;
     QTimer *timer1S = nullptr;
     unsigned int framecounter = 0;
     unsigned int fps = 0;
@@ -26,6 +28,7 @@ public:
 
 signals:
     void PresentFrame(QPixmap frame);
+    void Message(QString message);
 
 private slots:
     void FrameReady(QVideoFrame frame);

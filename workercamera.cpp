@@ -18,16 +18,21 @@ WorkerCamera::~WorkerCamera(){
         delete mediasession;
         mediasession = nullptr;
     }
+
+    if(camera){
+        delete camera;
+        camera = nullptr;
+    }
 }
 
 void WorkerCamera::StartCamera(){
 
-    QCamera *camera = nullptr;
     QVideoSink *sink = nullptr;
 
     try{
         mediasession = new QMediaCaptureSession(this);
     }catch(...){
+        emit Message("Failed to start camera");
         return;
     }
 
@@ -36,6 +41,8 @@ void WorkerCamera::StartCamera(){
     }catch(...){
         delete mediasession;
         mediasession = nullptr;
+        emit Message("Failed to start camera");
+        return;
     }
 
     try{
@@ -45,6 +52,7 @@ void WorkerCamera::StartCamera(){
         mediasession = nullptr;
         delete sink;
         sink = nullptr;
+        emit Message("Failed to start camera");
         return;
     }
 
@@ -53,7 +61,6 @@ void WorkerCamera::StartCamera(){
 
     camera->start();
 
-    connect(mediasession, &QMediaCaptureSession::destroyed, camera, &QCamera::deleteLater);
     connect(mediasession, &QMediaCaptureSession::destroyed, sink, &QVideoSink::deleteLater);
     connect(sink, &QVideoSink::videoFrameChanged, this, &WorkerCamera::FrameReady);
 
@@ -62,7 +69,19 @@ void WorkerCamera::StartCamera(){
 
 void WorkerCamera::FrameReady(QVideoFrame frame){
 
-    emit PresentFrame(QPixmap::fromImage(frame.toImage()));
+    QImage frameimage = frame.toImage();
+    QPainter p;
+
+    if(p.begin(&frameimage)){
+        p.setPen(QPen(Qt::red));
+        p.setFont(QFont("Times", 30));
+        p.drawText(10, 40, "FPS: " + QString::number(fps));
+        p.end();
+    }
+
+    framecounter++;
+
+    emit PresentFrame(QPixmap::fromImage(frameimage));
 }
 
 void WorkerCamera::Timer1STimeout(){

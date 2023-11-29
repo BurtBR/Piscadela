@@ -58,6 +58,7 @@ bool MainWindow::StartThreadCamera(){
 
     connect(threadCamera, &QThread::finished, worker, &WorkerCamera::deleteLater);
     connect(worker, &WorkerCamera::PresentFrame, this, &MainWindow::PresentFrame);
+    connect(worker, &WorkerCamera::Message, this, &MainWindow::WorkerMessage);
     connect(this, &MainWindow::StartCamera, worker, &WorkerCamera::StartCamera);
 
     worker->moveToThread(threadCamera);
@@ -78,6 +79,10 @@ void MainWindow::PresentFrame(QPixmap frame){
     int h = ui->labelImage->height()-10;
 
     ui->labelImage->setPixmap(frame.scaled(w, h, Qt::KeepAspectRatio));
+}
+
+void MainWindow::WorkerMessage(QString message){
+    PrintMessage(message);
 }
 
 void MainWindow::On_buttonSwapCamera_clicked(){
