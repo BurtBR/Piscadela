@@ -18,8 +18,11 @@ private:
     QTimer *timer1S = nullptr;
     unsigned int framecounter = 0;
     unsigned int fps = 0;
+    bool coding = false;
+    unsigned char selectionthreshold = 70;
 
     // Provate methods
+    void ProcessFrame(QImage &frame);
 
 public:
     explicit WorkerCamera(QObject *parent = nullptr);
@@ -35,6 +38,7 @@ private slots:
 
 public slots:
     void StartCamera();
+    void StartCoding(unsigned char threshold = 70);
 };
 
 #endif // WORKERCAMERA_H

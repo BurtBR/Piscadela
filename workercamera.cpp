@@ -25,6 +25,21 @@ WorkerCamera::~WorkerCamera(){
     }
 }
 
+void WorkerCamera::ProcessFrame(QImage &frame){
+
+    unsigned char linecolor;
+
+    for(int j=0; j<frame.height() ;j++){
+        if((frame.pixel(frame.width()/2, j)&0xFF) > selectionthreshold)
+            linecolor = 255;
+        else
+            linecolor = 0;
+
+        for(int i=0; i<frame.width() ;i++)
+            frame.setPixelColor(i, j, qRgb(linecolor, linecolor, linecolor));
+    }
+}
+
 void WorkerCamera::StartCamera(){
 
     QVideoSink *sink = nullptr;
@@ -72,6 +87,11 @@ void WorkerCamera::FrameReady(QVideoFrame frame){
     QImage frameimage = frame.toImage();
     QPainter p;
 
+    if(coding){
+        frameimage.convertTo(QImage::Format_Grayscale8);
+        ProcessFrame(frameimage);
+    }
+
     if(p.begin(&frameimage)){
         p.setPen(QPen(Qt::red));
         p.setFont(QFont("Times", 30));
@@ -87,4 +107,9 @@ void WorkerCamera::FrameReady(QVideoFrame frame){
 void WorkerCamera::Timer1STimeout(){
     fps = framecounter;
     framecounter = 0;
+}
+
+void WorkerCamera::StartCoding(unsigned char threshold){
+    coding = !coding;
+    selectionthreshold = threshold;
 }

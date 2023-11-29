@@ -197,7 +197,7 @@ QCheckBox{
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="spinBox_2">
+           <widget class="QSpinBox" name="spinFrameAvg">
             <property name="minimum">
              <number>1</number>
             </property>
@@ -226,7 +226,7 @@ QCheckBox{
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="spinBox">
+           <widget class="QSpinBox" name="spinThreshold">
             <property name="minimum">
              <number>1</number>
             </property>
@@ -264,7 +264,7 @@ QCheckBox{
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="spinBox_3">
+           <widget class="QSpinBox" name="spinBlackheight">
             <property name="minimum">
              <number>1</number>
             </property>
@@ -296,7 +296,7 @@ QCheckBox{
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="spinBox_4">
+           <widget class="QSpinBox" name="spinWhiteheight">
             <property name="minimum">
              <number>1</number>
             </property>
@@ -504,10 +504,10 @@ li.checked::marker { content: &quot;\2612&quot;; }
   <tabstop>tabWidget</tabstop>
   <tabstop>buttonSwapCamera</tabstop>
   <tabstop>comboBox</tabstop>
-  <tabstop>spinBox_2</tabstop>
-  <tabstop>spinBox</tabstop>
-  <tabstop>spinBox_3</tabstop>
-  <tabstop>spinBox_4</tabstop>
+  <tabstop>spinFrameAvg</tabstop>
+  <tabstop>spinThreshold</tabstop>
+  <tabstop>spinBlackheight</tabstop>
+  <tabstop>spinWhiteheight</tabstop>
   <tabstop>buttonDecode</tabstop>
   <tabstop>checkBox_4</tabstop>
   <tabstop>checkBox_2</tabstop>

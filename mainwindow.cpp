@@ -60,6 +60,7 @@ bool MainWindow::StartThreadCamera(){
     connect(worker, &WorkerCamera::PresentFrame, this, &MainWindow::PresentFrame);
     connect(worker, &WorkerCamera::Message, this, &MainWindow::WorkerMessage);
     connect(this, &MainWindow::StartCamera, worker, &WorkerCamera::StartCamera);
+    connect(this, &MainWindow::StartCoding, worker, &WorkerCamera::StartCoding);
 
     worker->moveToThread(threadCamera);
     threadCamera->start();
@@ -90,7 +91,7 @@ void MainWindow::On_buttonSwapCamera_clicked(){
 }
 
 void MainWindow::On_buttonDecode_clicked(){
-    PrintMessage("Pi pi pi po po zaum\n");
+    emit StartCoding(ui->spinThreshold->value());
 }
 
 void MainWindow::On_textCoderUser_textChanged(){

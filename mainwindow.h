@@ -26,6 +26,7 @@ public:
 
 signals:
     void StartCamera();
+    void StartCoding(unsigned char);
 
 private slots:
     void PrintMessage(QString text);
