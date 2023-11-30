@@ -41,7 +41,7 @@ void WorkerCoder::Translate(QString text){
             textaux = "";
 
         if(headertext)
-            textaux.append("00011111");
+            textaux.append("11100110");
 
 
         textaux.append(CharToBinary(text[i]));

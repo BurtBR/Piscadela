@@ -27,9 +27,22 @@ WorkerCamera::~WorkerCamera(){
 
 void WorkerCamera::ProcessFrame(QImage &frame){
 
-    unsigned int linecolor;
+    unsigned int linecolor, samebitcounter = 1;
+    bool lastbit;
+    QString framecode;
+    qsizetype indexofheader;
 
-    for(int j=0; j<frame.height() ;j++){
+    if((frame.pixel(frame.width()/2, 0)&0xFF) > selectionthreshold)
+        linecolor = 0xFFFFFFFF;
+    else
+        linecolor = 0;
+
+    for(int i=0; i<frame.width() ;i++)
+        frame.setPixelColor(i, 0, linecolor);
+
+    lastbit = linecolor;
+
+    for(int j=1; j<frame.height() ;j++){
         if((frame.pixel(frame.width()/2, j)&0xFF) > selectionthreshold)
             linecolor = 0xFFFFFFFF;
         else
@@ -37,6 +50,65 @@ void WorkerCamera::ProcessFrame(QImage &frame){
 
         for(int i=0; i<frame.width() ;i++)
             frame.setPixelColor(i, j, linecolor);
+
+        if(lastbit != ((bool)linecolor)){
+            if(lastbit)
+                samebitcounter = qRound((double)samebitcounter/(double)whiteheight);
+            else
+                samebitcounter = qRound((double)samebitcounter/(double)blackheight);
+
+            framecode.append(QString(QChar('0'+lastbit)).repeated(samebitcounter));
+
+            lastbit = linecolor;
+            samebitcounter = 0;
+        }
+        samebitcounter++;
+    }
+
+    if(samebitcounter > 1){
+        if(lastbit)
+            samebitcounter = qRound((double)whiteheight/(double)samebitcounter);
+        else
+            samebitcounter = qRound((double)blackheight/(double)samebitcounter);
+
+        framecode.append(QString(QChar('0'+lastbit)).repeated(samebitcounter));
+    }
+
+    if(!topbottom)
+        ReverseStr(framecode);
+
+    indexofheader = framecode.indexOf("11100110");
+
+    if(debugmode){
+        emit Message(framecode);
+        if(indexofheader != -1){
+            emit Message("\t Detectado: ");
+            framecode.remove(0, indexofheader+8);
+            framecode.remove(8, framecode.size());
+            emit Message(QChar(framecode.toInt(nullptr, 2)));
+        }
+        emit Message("\n");
+    }else{
+        if(indexofheader != -1){
+            framecode.remove(0, indexofheader+8);
+            framecode.remove(8, framecode.size());
+            emit Message(QChar(framecode.toInt(nullptr, 2)));
+            return;
+        }
+    }
+}
+
+void WorkerCamera::ReverseStr(QString &str){
+    QChar charaux;
+    int begin=0, end=(str.size()-1);
+
+    while(begin<end){
+        charaux = str[begin];
+        str[begin] = str[end];
+        str[end] = charaux;
+
+        begin++;
+        end--;
     }
 }
 
@@ -109,13 +181,35 @@ void WorkerCamera::Timer1STimeout(){
     framecounter = 0;
 }
 
-void WorkerCamera::StartCoding(unsigned int frameaverage, unsigned char threshold, unsigned int blacksize, unsigned int whitesize){
+void WorkerCamera::StartCoding(bool istopbottom, unsigned int frameaverage, unsigned char threshold, unsigned int blacksize, unsigned int whitesize){
     coding = !coding;
 
+    topbottom = istopbottom;
     frameavg = frameaverage;
     selectionthreshold = threshold;
     blackheight = blacksize;
     whiteheight = whitesize;
+}
+
+void WorkerCamera::SwapCamera(){
+
+    const QList<QCameraDevice> availablecameras = QMediaDevices::videoInputs();
+
+    if(availablecameras.size() < 2){
+        if(camera->cameraDevice() == availablecameras[0]){
+            emit Message("Não existe outra câmera disponível");
+            return;
+        }
+        camera->setCameraDevice(availablecameras[0]);
+    }else if(camera->cameraDevice() == availablecameras[0]){
+        camera->setCameraDevice(availablecameras[1]);
+    }else{
+        camera->setCameraDevice(availablecameras[0]);
+    }
+}
+
+void WorkerCamera::CameraSetTopBottom(bool istopbottom){
+    topbottom = istopbottom;
 }
 
 void WorkerCamera::CameraSetFrameaverage(unsigned int value){
@@ -132,4 +226,8 @@ void WorkerCamera::CameraSetBlacksize(unsigned int value){
 
 void WorkerCamera::CameraSetWhitesize(unsigned int value){
     whiteheight = value;
+}
+
+void WorkerCamera::CameraSetCalibration(bool value){
+    debugmode = value;
 }

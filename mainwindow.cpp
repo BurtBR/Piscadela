@@ -36,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->checkInsertBeginFrame, &QCheckBox::stateChanged, this, &MainWindow::On_checkInsertBeginFrame_Toggled);
     connect(ui->checkInsertComma, &QCheckBox::stateChanged, this, &MainWindow::On_checkInsertComma_Toggled);
     connect(ui->checkInsertHeader, &QCheckBox::stateChanged, this, &MainWindow::On_checkInsertHeader_Toggled);
+    connect(ui->checkCalibration, &QCheckBox::stateChanged, this, &MainWindow::On_checkCalibration_Toggled);
 }
 
 MainWindow::~MainWindow(){
@@ -89,11 +90,14 @@ bool MainWindow::StartThreadCamera(){
     connect(worker, &WorkerCamera::Message, this, &MainWindow::WorkerMessage);
     connect(this, &MainWindow::StartCamera, worker, &WorkerCamera::StartCamera);
     connect(this, &MainWindow::StartCoding, worker, &WorkerCamera::StartCoding);
+    connect(this, &MainWindow::CameraSwap, worker, &WorkerCamera::SwapCamera);
 
+    connect(this, &MainWindow::CameraSetTopBottom, worker, &WorkerCamera::CameraSetTopBottom);
     connect(this, &MainWindow::CameraSetFrameaverage, worker, &WorkerCamera::CameraSetFrameaverage);
     connect(this, &MainWindow::CameraSetThreshold, worker, &WorkerCamera::CameraSetThreshold);
     connect(this, &MainWindow::CameraSetBlacksize, worker, &WorkerCamera::CameraSetBlacksize);
     connect(this, &MainWindow::CameraSetWhitesize, worker, &WorkerCamera::CameraSetWhitesize);
+    connect(this, &MainWindow::SetCalibration, worker, &WorkerCamera::CameraSetCalibration);
 
     worker->moveToThread(threadCamera);
     threadCamera->start();
@@ -161,11 +165,15 @@ void MainWindow::WorkerTranslated(QString text){
 }
 
 void MainWindow::On_buttonSwapCamera_clicked(){
-    PrintMessage("Troca troca de câmera\n");
+    emit CameraSwap();
 }
 
 void MainWindow::On_buttonDecode_clicked(){
-    emit StartCoding(ui->spinFrameAvg->value(),
+
+    bool istopbottom = (ui->comboBottomUp->currentIndex() == 0 ? true : false);;
+
+    emit StartCoding(istopbottom,
+                     ui->spinFrameAvg->value(),
                      ui->spinThreshold->value(),
                      ui->spinBlackheight->value(),
                      ui->spinWhiteheight->value());
@@ -173,6 +181,13 @@ void MainWindow::On_buttonDecode_clicked(){
 
 void MainWindow::On_textCoderUser_textChanged(){
     emit Translate(ui->textCoderUser->toPlainText());
+}
+
+void MainWindow::On_comboBottomUp_selectionChanged(){
+    if(ui->comboBottomUp->currentIndex() == 0)
+        emit CameraSetTopBottom(true);
+    else
+        emit CameraSetTopBottom(false);
 }
 
 void MainWindow::On_spinFrameAvg_valueChanged(int newvalue){
@@ -209,4 +224,8 @@ void MainWindow::On_checkInsert0b_Toggled(int value){
 void MainWindow::On_checkInsertComma_Toggled(int value){
     emit SetInsertComma(value);
     emit Translate(ui->textCoderUser->toPlainText());
+}
+
+void MainWindow::On_checkCalibration_Toggled(int value){
+    emit SetCalibration(value);
 }

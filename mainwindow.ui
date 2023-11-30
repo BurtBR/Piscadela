@@ -94,7 +94,7 @@ QCheckBox{
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -155,15 +155,18 @@ QCheckBox{
            </widget>
           </item>
           <item>
-           <widget class="QComboBox" name="comboBox">
+           <widget class="QComboBox" name="comboBottomUp">
+            <property name="currentIndex">
+             <number>1</number>
+            </property>
             <item>
              <property name="text">
-              <string>Bottom/Up</string>
+              <string>Up/Bottom</string>
              </property>
             </item>
             <item>
              <property name="text">
-              <string>Up/Bottom</string>
+              <string>Bottom/Up</string>
              </property>
             </item>
            </widget>
@@ -234,7 +237,7 @@ QCheckBox{
              <number>254</number>
             </property>
             <property name="value">
-             <number>70</number>
+             <number>100</number>
             </property>
            </widget>
           </item>
@@ -272,7 +275,7 @@ QCheckBox{
              <number>4000</number>
             </property>
             <property name="value">
-             <number>15</number>
+             <number>16</number>
             </property>
            </widget>
           </item>
@@ -304,7 +307,7 @@ QCheckBox{
              <number>4000</number>
             </property>
             <property name="value">
-             <number>18</number>
+             <number>16</number>
             </property>
            </widget>
           </item>
@@ -320,6 +323,13 @@ QCheckBox{
              </size>
             </property>
            </spacer>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="checkCalibration">
+            <property name="text">
+             <string>Calibração</string>
+            </property>
+           </widget>
           </item>
           <item>
            <widget class="QPushButton" name="buttonDecode">
@@ -503,7 +513,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>buttonSwapCamera</tabstop>
-  <tabstop>comboBox</tabstop>
+  <tabstop>comboBottomUp</tabstop>
   <tabstop>spinFrameAvg</tabstop>
   <tabstop>spinThreshold</tabstop>
   <tabstop>spinBlackheight</tabstop>

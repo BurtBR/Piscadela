@@ -29,7 +29,9 @@ public:
 
 signals:
     void StartCamera();
-    void StartCoding(unsigned int frameaverage, unsigned char threshold, unsigned int blacksize, unsigned int whitesize);
+    void StartCoding(bool istopbottom, unsigned int frameaverage, unsigned char threshold, unsigned int blacksize, unsigned int whitesize);
+    void CameraSwap();
+    void CameraSetTopBottom(bool istopbottom = true);
     void CameraSetFrameaverage(unsigned int value);
     void CameraSetThreshold(unsigned int value);
     void CameraSetBlacksize(unsigned int value);
@@ -39,6 +41,7 @@ signals:
     void SetInsertHeader(bool value);
     void SetInsert0b(bool value);
     void SetInsertComma(bool value);
+    void SetCalibration(bool value);
 
 private slots:
     void PrintMessage(QString text);
@@ -48,6 +51,7 @@ private slots:
     void On_buttonSwapCamera_clicked();
     void On_buttonDecode_clicked();
     void On_textCoderUser_textChanged();
+    void On_comboBottomUp_selectionChanged();
     void On_spinFrameAvg_valueChanged(int newvalue);
     void On_spinThreshold_valueChanged(int newvalue);
     void On_spinBlackheight_valueChanged(int newvalue);
@@ -56,6 +60,7 @@ private slots:
     void On_checkInsertHeader_Toggled(int value);
     void On_checkInsert0b_Toggled(int value);
     void On_checkInsertComma_Toggled(int value);
+    void On_checkCalibration_Toggled(int value);
 };
 
 #endif // MAINWINDOW_H
