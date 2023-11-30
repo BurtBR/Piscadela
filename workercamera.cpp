@@ -67,9 +67,9 @@ void WorkerCamera::ProcessFrame(QImage &frame){
 
     if(samebitcounter > 1){
         if(lastbit)
-            samebitcounter = qRound((double)whiteheight/(double)samebitcounter);
+            samebitcounter = qRound((double)samebitcounter/(double)whiteheight);
         else
-            samebitcounter = qRound((double)blackheight/(double)samebitcounter);
+            samebitcounter = qRound((double)samebitcounter/(double)blackheight);
 
         framecode.append(QString(QChar('0'+lastbit)).repeated(samebitcounter));
     }
@@ -89,11 +89,29 @@ void WorkerCamera::ProcessFrame(QImage &frame){
         }
         emit Message("\n");
     }else{
-        if(indexofheader != -1){
+        if((indexofheader != -1) && codebegun){
             framecode.remove(0, indexofheader+8);
             framecode.remove(8, framecode.size());
-            emit Message(QChar(framecode.toInt(nullptr, 2)));
-            return;
+            if(framecode.toInt(nullptr, 2) == lastsymbol){
+                symbolcounter++;
+            }else{
+                if(lastsymbol == 0xFFFF){
+                    emit Message("\n");
+                }else if(qRound((double)symbolcounter/(double)frameavg) > 0){
+                    emit Message(QString(QChar(lastsymbol)).repeated(qRound((double)symbolcounter/(double)frameavg)));
+                }
+                lastsymbol = framecode.toInt(nullptr, 2);
+                symbolcounter = 1;
+            }
+        }else{
+
+            if(codebegun && lastsymbol != 0xFFFF)
+                emit Message(QString(QChar(lastsymbol)).repeated(qRound((double)symbolcounter/(double)frameavg)));
+
+            if(framecode.indexOf("11111111111111111111111111") != -1){
+                codebegun = true;
+                lastsymbol = 0xFFFF;
+            }
         }
     }
 }
@@ -162,7 +180,8 @@ void WorkerCamera::FrameReady(QVideoFrame frame){
     if(coding){
         frameimage.convertTo(QImage::Format_Grayscale8);
         ProcessFrame(frameimage);
-    }
+    }else
+        codebegun = false;
 
     if(p.begin(&frameimage)){
         p.setPen(QPen(Qt::red));

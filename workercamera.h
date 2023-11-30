@@ -11,14 +11,20 @@
 #include <QPainter>
 #include <QTimer>
 
+// TEMPORARIO
+#include <QDebug>
+// TEMPORARIO
+
 class WorkerCamera : public QObject{
     Q_OBJECT
 private:
     QMediaCaptureSession *mediasession = nullptr;
     QCamera *camera = nullptr;
     QTimer *timer1S = nullptr;
+    uint16_t lastsymbol;
     unsigned int framecounter = 0;
     unsigned int fps = 0;
+    unsigned int symbolcounter = 0;
     bool coding = false;
     bool topbottom = true;
     bool debugmode = false;

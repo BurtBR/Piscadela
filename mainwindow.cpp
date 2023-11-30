@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     connect(ui->checkInsertComma, &QCheckBox::stateChanged, this, &MainWindow::On_checkInsertComma_Toggled);
     connect(ui->checkInsertHeader, &QCheckBox::stateChanged, this, &MainWindow::On_checkInsertHeader_Toggled);
     connect(ui->checkCalibration, &QCheckBox::stateChanged, this, &MainWindow::On_checkCalibration_Toggled);
+    connect(ui->comboBottomUp, &QComboBox::currentIndexChanged, this, &MainWindow::On_comboBottomUp_selectionChanged);
 }
 
 MainWindow::~MainWindow(){
