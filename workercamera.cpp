@@ -215,6 +215,11 @@ void WorkerCamera::SwapCamera(){
     const QList<QCameraDevice> availablecameras = QMediaDevices::videoInputs();
 
     if(availablecameras.size() < 2){
+        if(!availablecameras.size()){
+            emit Message("Não existe câmera disponível");
+            return;
+        }
+
         if(camera->cameraDevice() == availablecameras[0]){
             emit Message("Não existe outra câmera disponível");
             return;
