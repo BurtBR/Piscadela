@@ -94,7 +94,7 @@ QCheckBox{
     <item>
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>0</number>
+       <number>1</number>
       </property>
       <property name="documentMode">
        <bool>false</bool>
@@ -485,7 +485,7 @@ li.checked::marker { content: &quot;\2612&quot;; }
           <item>
            <widget class="QTextEdit" name="textCoderCode">
             <property name="focusPolicy">
-             <enum>Qt::NoFocus</enum>
+             <enum>Qt::ClickFocus</enum>
             </property>
             <property name="acceptDrops">
              <bool>false</bool>
