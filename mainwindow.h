@@ -50,6 +50,7 @@ private slots:
     void WorkerTranslated(QString text);
     void On_buttonSwapCamera_clicked();
     void On_buttonDecode_clicked();
+    void On_buttonClearConsole_clicked();
     void On_textCoderUser_textChanged();
     void On_comboBottomUp_selectionChanged();
     void On_spinFrameAvg_valueChanged(int newvalue);

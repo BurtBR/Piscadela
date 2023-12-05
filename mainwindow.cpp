@@ -27,6 +27,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     connect(ui->buttonDecode, &QPushButton::clicked, this, &MainWindow::On_buttonDecode_clicked);
     connect(ui->buttonSwapCamera, &QToolButton::clicked, this, &MainWindow::On_buttonSwapCamera_clicked);
+    connect(ui->buttonClearConsole, &QPushButton::clicked, this, &MainWindow::On_buttonClearConsole_clicked);
     connect(ui->textCoderUser, &QTextEdit::textChanged, this, &MainWindow::On_textCoderUser_textChanged);
     connect(ui->spinFrameAvg, &QSpinBox::valueChanged, this, &MainWindow::On_spinFrameAvg_valueChanged);
     connect(ui->spinThreshold, &QSpinBox::valueChanged, this, &MainWindow::On_spinThreshold_valueChanged);
@@ -178,6 +179,10 @@ void MainWindow::On_buttonDecode_clicked(){
                      ui->spinThreshold->value(),
                      ui->spinBlackheight->value(),
                      ui->spinWhiteheight->value());
+}
+
+void MainWindow::On_buttonClearConsole_clicked(){
+    ui->textConsole->clear();
 }
 
 void MainWindow::On_textCoderUser_textChanged(){
