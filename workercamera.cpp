@@ -95,7 +95,9 @@ void WorkerCamera::ProcessFrame(QImage &frame){
             if(framecode.toInt(nullptr, 2) == lastsymbol){
                 symbolcounter++;
             }else{
-                if(lastsymbol == 0xFFFF){
+                if(lastsymbol == 0xFF00){
+
+                }else if(lastsymbol == 0xFFFF){
                     emit Message("\n");
                 }else if(qRound((double)symbolcounter/(double)frameavg) > 0){
                     emit Message(QString(QChar(lastsymbol)).repeated(qRound((double)symbolcounter/(double)frameavg)));
@@ -104,13 +106,15 @@ void WorkerCamera::ProcessFrame(QImage &frame){
                 symbolcounter = 1;
             }
         }else{
-
-            if(codebegun && lastsymbol != 0xFFFF)
+            if(codebegun && (lastsymbol != 0xFFFF) && (lastsymbol != 0xFF00))
                 emit Message(QString(QChar(lastsymbol)).repeated(qRound((double)symbolcounter/(double)frameavg)));
 
             if(framecode.indexOf("11111111111111111111111111") != -1){
                 codebegun = true;
                 lastsymbol = 0xFFFF;
+            }else{
+                lastsymbol = 0xFF00;
+                symbolcounter = 1;
             }
         }
     }
